@@ -1,9 +1,20 @@
-# Mountaintop clubhouse
+---
+title: "Nittany Amateur Radio Club (NARC) clubhouse guide"
+author: "Rick O. Gilmore"
+date: "`r Sys.time()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    self_contained: false
+---
 
-## Arrival
+# Arrival
 
 - Unlock the gate. Use the small key to unlock the padlock. Take the padlock with you to the shack.
-- Close the gate and replace the lock bar, but do not lock it.
+- Close the gate and replace the lock bar, but do not re-lock the gate.
 
 ADD PHOTO
 
@@ -12,10 +23,13 @@ ADD PHOTO
 - There are light switches on the left just inside the door.
 - Put the padlock and locking bar on the desk near the door.
 - Turn up the heat, if needed. To do this, you will need to go to the breaker box near the southeast corner of the shack. By default, we leave breakers 7-14 -- the baseboard and north wall 240 V heaters -- **off**, and the remainder on. So, you will want to these breakers on by pushing the breaker lever to the left to align with the others as seen in the photo.
+- The porta potty key is on the desktop to the right of the door.
 
 ADD PHOTO
 
-## Set-up IC-7610 (<span class="yellow">yellow tags/labels</span>) called NARC 1
+# Equipment setup
+
+## IC-7610 (<span class="yellow">yellow tags/labels</span>) called NARC 1
 
 - The IC-7610 is located closest to the door.
 - Connect the equipment to the power mains.
@@ -31,7 +45,7 @@ ADD PHOTO
 - The IC-7610 is connected to the Elecraft KPA1500 amplifier. The power supply for the KPA1500 is under the desk on a small footstool.
 - Power up the KPA1500 by pressing the on switch on the lower right hand side of the KPA1500.
 
-## Operating the IC-7610
+### Operating the IC-7610
 
 ### Accessories
 
@@ -55,13 +69,14 @@ ADD PHOTO
 - There is a Heil Pro 7 headset.
 - There is a Bencher BY-1 paddle.
 
-## Departure
+# Departure
 
 - Power down all the equipment you used.
 - Turn off the UPS and unplug it from the wall sockets.
 - Unplug the power amplifier power supplies from the wall sockets.
 - Unplug the antenna rotator power supplies from the wall sockets.
 - Turn breakers 7-14 -- the baseboard and north wall 240 V heaters -- **off**.
+- Return the porta potty key to the desktop to the right side of the door.
 - Take the padlock to gate with you.
 - As you leave the shack, close and lock the door by turning the key to the right (clockwise). Check again to confirm that the door is closed and locked.
 - As you reach the gate, stop, remove the lock bar, and swing the gate out of the way.

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Rick O. Gilmore" />
+
+
+<title>Nittany Amateur Radio Club (NARC) clubhouse guide</title>
+
+<script src="clubhouse-guide_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="clubhouse-guide_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="clubhouse-guide_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="clubhouse-guide_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="clubhouse-guide_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="clubhouse-guide_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="clubhouse-guide_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="clubhouse-guide_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="clubhouse-guide_files/navigation-1.1/tabsets.js"></script>
+<link href="clubhouse-guide_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="clubhouse-guide_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Nittany Amateur Radio Club (NARC) clubhouse guide</h1>
+<h4 class="author">Rick O. Gilmore</h4>
+<h4 class="date">2019-04-10 07:23:52</h4>
+
+</div>
+
+
+<div id="arrival" class="section level1">
+<h1><span class="header-section-number">1</span> Arrival</h1>
+<ul>
+<li>Unlock the gate. Use the small key to unlock the padlock. Take the padlock with you to the shack.</li>
+<li>Close the gate and replace the lock bar, but do not lock it.</li>
+</ul>
+<p>ADD PHOTO</p>
+<ul>
+<li>Park anywhere near the shack and off the maintenance road.</li>
+<li>Unlock door of the shack. There is one lock above the door handle. Turn the key to the left (counterclockwise) to unlock the door.</li>
+<li>There are light switches on the left just inside the door.</li>
+<li>Put the padlock and locking bar on the desk near the door.</li>
+<li>Turn up the heat, if needed. To do this, you will need to go to the breaker box near the southeast corner of the shack. By default, we leave breakers 7-14 – the baseboard and north wall 240 V heaters – <strong>off</strong>, and the remainder on. So, you will want to these breakers on by pushing the breaker lever to the left to align with the others as seen in the photo.</li>
+<li>The porta potty key is on the desktop to the right of the door.</li>
+</ul>
+<p>ADD PHOTO</p>
+</div>
+<div id="equipment-setup" class="section level1">
+<h1><span class="header-section-number">2</span> Equipment setup</h1>
+<div id="ic-7610-yellow-tagslabels-called-narc-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> IC-7610 (<span class="yellow">yellow tags/labels</span>) called NARC 1</h2>
+<ul>
+<li>The IC-7610 is located closest to the door.</li>
+<li>Connect the equipment to the power mains.
+<ul>
+<li>Plug the large 240 V cable for the amplifier into the 240 V wall outlet.</li>
+<li>Plug the smaller 120 V cable for the Uninterrupted Power Supply (UPS) into the wall outlet.</li>
+</ul></li>
+<li>Power up the UPS by pushing the front button.
+<ul>
+<li>If needed, power up the PC.</li>
+</ul></li>
+<li>Power up the Astron RS-35A power supply that powers the IC-7610.</li>
+<li>Before you power up the radio, connect it to a suitable antenna.
+<ul>
+<li>The antenna connections are located on the north wall.</li>
+<li>Plug the cable from the radio (yellow tag) into the cable connector for one of the antennas, for example, one of the triband Yagi’s for 10 - 20 m.</li>
+</ul></li>
+<li>Power up the IC-7610 by pressing and briefly holding the power button.</li>
+<li>The IC-7610 is connected to the Elecraft KPA1500 amplifier. The power supply for the KPA1500 is under the desk on a small footstool.</li>
+<li>Power up the KPA1500 by pressing the on switch on the lower right hand side of the KPA1500.</li>
+</ul>
+<div id="operating-the-ic-7610" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Operating the IC-7610</h3>
+</div>
+<div id="accessories" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Accessories</h3>
+<ul>
+<li>The default configuration uses the ICOM SM-50 desk mic.</li>
+<li>There is a Clipper footswitch for the PTT on the floor.</li>
+<li>There is a Heil headset.</li>
+<li>We have a Nifty Mini-manual and other manuals are located in the drawer under the radio.</li>
+</ul>
+</div>
+</div>
+<div id="elecraft-k3s-red-tag-narc-2-station" class="section level2">
+<h2><span class="header-section-number">2.2</span> Elecraft K3S (<span class="red">red tag) NARC 2 station</h2>
+<ul>
+<li>Connect the UPS to the wall power outlet.</li>
+<li>Connect the 240 V Elecraft KPA1500 power supply cable to the 240 V supply.</li>
+<li>Power up the Astron RS-35A power supply by pressing the red ‘on’ switch on the lower left front part of the panel.</li>
+<li>Power up the K3S.</li>
+<li>Power up the KPA1500 by pressing the ‘On’ switch on the lower right panel.</li>
+</ul>
+<div id="accessories-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Accessories</h3>
+<ul>
+<li>There is an Elecraft P3 panadapter connected to the K3S.</li>
+<li>There is a footswitch on the floor.</li>
+<li>There is a Heil Pro 7 headset.</li>
+<li>There is a Bencher BY-1 paddle.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="departure" class="section level1">
+<h1><span class="header-section-number">3</span> Departure</h1>
+<ul>
+<li>Power down all the equipment you used.</li>
+<li>Turn off the UPS and unplug it from the wall sockets.</li>
+<li>Unplug the power amplifier power supplies from the wall sockets.</li>
+<li>Unplug the antenna rotator power supplies from the wall sockets.</li>
+<li>Turn breakers 7-14 – the baseboard and north wall 240 V heaters – <strong>off</strong>.</li>
+<li>Return the porta potty key to the desktop to the right side of the door.</li>
+<li>Take the padlock to gate with you.</li>
+<li>As you leave the shack, close and lock the door by turning the key to the right (clockwise). Check again to confirm that the door is closed and locked.</li>
+<li>As you reach the gate, stop, remove the lock bar, and swing the gate out of the way.</li>
+<li>Drive through and stop just outside the gate.</li>
+<li>Swing the gate back into closed position. Place the lock bar in position, and lock the gate.</li>
+</ul>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
