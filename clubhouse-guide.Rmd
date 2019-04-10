@@ -1,6 +1,6 @@
 ---
 title: "Nittany Amateur Radio Club (NARC) clubhouse guide"
-author: "Rick O. Gilmore"
+author: "Rick Gilmore (K3ROG)"
 date: "`r Sys.time()`"
 output:
   html_document:
@@ -13,13 +13,13 @@ output:
 
 # Arrival
 
-- Unlock the gate. Use the small key to unlock the padlock. Take the padlock with you to the shack.
+- Unlock the gate. Use the small key to unlock the padlock. The larger key opens the clubhouse itself. Take the padlock with you to the shack.
 - Close the gate and replace the lock bar, but do not re-lock the gate.
 
 ADD PHOTO
 
 - Park anywhere near the shack and off the maintenance road.
-- Unlock door of the shack. There is one lock above the door handle. Turn the key to the left (counterclockwise) to unlock the door.
+- Unlock door of the shack using the larger of the two keys. There is one lock above the door handle. Turn the key to the left (counterclockwise) to unlock the door.
 - There are light switches on the left just inside the door.
 - Put the padlock and locking bar on the desk near the door.
 - Turn up the heat, if needed. To do this, you will need to go to the breaker box near the southeast corner of the shack. By default, we leave breakers 7-14 -- the baseboard and north wall 240 V heaters -- **off**, and the remainder on. So, you will want to these breakers on by pushing the breaker lever to the left to align with the others as seen in the photo.
@@ -29,7 +29,7 @@ ADD PHOTO
 
 # Equipment setup
 
-## IC-7610 (<span class="yellow">yellow tags/labels</span>) called NARC 1
+## IC-7610 (yellow tags/labels) called NARC 1
 
 - The IC-7610 is located closest to the door.
 - Connect the equipment to the power mains.
@@ -82,5 +82,4 @@ ADD PHOTO
 - As you reach the gate, stop, remove the lock bar, and swing the gate out of the way.
 - Drive through and stop just outside the gate.
 - Swing the gate back into closed position. Place the lock bar in position, and lock the gate.
-
-
+- Please text Rick (814-777-3298) or Eric (814-867-3393) when you leave. We ask that you report any issues that need to be addressed.
