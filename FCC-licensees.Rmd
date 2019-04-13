@@ -1,0 +1,71 @@
+---
+title: "fcc-licensees"
+author: "Rick O. Gilmore"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Purpose
+
+To create a list of licensed hams in the State College area for use by the Nittany Amateur Radio Club's outreach and communication efforts.
+
+# Gathering
+
+Data were gathered for licenses active in the last two years from the FCC ULS database:
+
+<https://wireless2.fcc.gov/UlsApp/UlsSearch/searchAmateur.jsp>
+
+The 16801, 16802, and 16803 zip codes were selected.
+
+Once the FCC database provided URLs, these 'pipe'-delimited data files were downloaded. The raw files are in `data/pipe`.
+
+```{r}
+data_dir <- 'data/pipe'
+```
+
+
+# Cleaning
+  
+## Import
+
+I will focus on the `*all-16801.txt` and `*all-16803.txt` files since these are larger and more comprehensive.
+
+```{r}
+hams_801 <- read.delim(file = paste0(data_dir, '/fcc-ham-all-16801.txt'), sep = '|', header = FALSE)
+```
+
+The file is a mess.
+Callsigns are mixed up with dates. There must be some problem in the parsing.
+I opened the file in a text editor, changed the pipes to tabs, and trimmed the file to include the names and addresses.
+
+```{r}
+hams_801 <- read.delim(file = '~/Desktop/narc/16801-trim.txt', header = FALSE)
+str(hams_801)
+```
+
+This looks a little better.
+I'm going to keep the callsigns, name info, and address.
+
+```{r}
+trimmed_801 <- hams_801 %>%
+  select(., V5, V8, V9, V10, V11, V12, V16, V17, V18, V19, V23)
+trimmed_801 %>% knitr::kable(.)
+```
+
+I say we can keep V5, V8, V16, V17, V18, and V19, and drop the rest.
+
+```{r}
+hams_16801 <- trimmed_801 %>%
+  select(., V5, V8, V16, V17, V18, V19) %>%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19)
+hams_16801 %>% knitr::kable(.)
+```
+ 
+ That looks good.
+ Now let's try the same thing with the 16803 file.
+ 
