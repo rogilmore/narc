@@ -191,7 +191,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">fcc-licensees</h1>
 <h4 class="author">Rick O. Gilmore</h4>
-<h4 class="date">2019-04-13 06:51:28</h4>
+<h4 class="date">2019-04-13 12:16:31</h4>
 
 </div>
 
@@ -214,8 +214,8 @@ $(document).ready(function () {
 <h2>Import</h2>
 <p>I will focus on the <code>*all-16801.txt</code> and <code>*all-16803.txt</code> files since these are larger and more comprehensive.</p>
 <pre class="r"><code>hams_801 &lt;- read.delim(file = paste0(data_dir, '/fcc-ham-all-16801.txt'), sep = '|', header = FALSE)</code></pre>
-<p>The file is a mess. Callsigns are mixed up with dates. There must be some problem in the parsing. I opened the file in a text editor, changed the pipes to tabs, and trimmed the file to include the names and addresses.</p>
-<pre class="r"><code>hams_801 &lt;- read.delim(file = '~/Desktop/narc/16801-trim.txt', header = FALSE)
+<p>The file is a mess. Callsigns are mixed up with dates. There must be some problem in the parsing. I opened the file in a text editor, changed the pipes to tabs, and trimmed the file to include the names and addresses, and saved it in <code>data/tab/</code>.</p>
+<pre class="r"><code>hams_801 &lt;- read.delim(file = 'data/tab/16801-trim.txt', header = FALSE)
 str(hams_801)</code></pre>
 <pre><code>## 'data.frame':    39 obs. of  27 variables:
 ##  $ V1 : Factor w/ 1 level &quot;EN&quot;: 1 1 1 1 1 1 1 1 1 1 ...
@@ -248,7 +248,8 @@ str(hams_801)</code></pre>
 <p>This looks a little better. I’m going to keep the callsigns, name info, and address.</p>
 <pre class="r"><code>trimmed_801 &lt;- hams_801 %&gt;%
   select(., V5, V8, V9, V10, V11, V12, V16, V17, V18, V19, V23)
-trimmed_801 %&gt;% knitr::kable(.)</code></pre>
+trimmed_801 %&gt;% 
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -778,7 +779,8 @@ trimmed_801 %&gt;% knitr::kable(.)</code></pre>
 <p>I say we can keep V5, V8, V16, V17, V18, and V19, and drop the rest.</p>
 <pre class="r"><code>hams_16801 &lt;- trimmed_801 %&gt;%
   select(., V5, V8, V16, V17, V18, V19) %&gt;%
-  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19)
+  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19) %&gt;%
+  arrange(by = callsign)
 hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <table>
 <thead>
@@ -801,12 +803,28 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="right">168012744</td>
 </tr>
 <tr class="even">
+<td align="left">AB3GL</td>
+<td align="left">Bilen, Sven G</td>
+<td align="left">435 W Fairmount Ave</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
 <td align="left">K3CWP</td>
 <td align="left">PRESTIA JR, CARMINE W</td>
 <td align="left">1265 SMITHFIELD ST</td>
 <td align="left">STATE COLLEGE</td>
 <td align="left">PA</td>
 <td align="right">168016432</td>
+</tr>
+<tr class="even">
+<td align="left">K3DWD</td>
+<td align="left">DECAPRIA, DAVID W</td>
+<td align="left">155 MITCH AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168017275</td>
 </tr>
 <tr class="odd">
 <td align="left">K3HOT</td>
@@ -817,6 +835,14 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="right">16801</td>
 </tr>
 <tr class="even">
+<td align="left">K3ROG</td>
+<td align="left">GILMORE, RICK O</td>
+<td align="left">608 EAST PROSPECT AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
 <td align="left">KA3BMU</td>
 <td align="left">WRBICAN, WILLIAM J</td>
 <td align="left">1172 DORUM AVE</td>
@@ -824,7 +850,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KA3PNC</td>
 <td align="left">KISSEL, DARLING F</td>
 <td align="left">1520 ASH AVE</td>
@@ -832,66 +858,10 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KB3CZD</td>
 <td align="left">LONG, ROY A</td>
 <td align="left">240 Oakwood Dr</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">KC8KVD</td>
-<td align="left">LOGAN, JERRY R</td>
-<td align="left">136 CREEKSIDE DR.</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">N3GOI</td>
-<td align="left">ESLINGER, STEVEN E</td>
-<td align="left">721 WINDSOR CT</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">N5FKM</td>
-<td align="left">RYL, DR</td>
-<td align="left">165 HAYMAKER CIRCLE</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">168016979</td>
-</tr>
-<tr class="even">
-<td align="left">W3WAB</td>
-<td align="left">BICEHOUSE, WAYNE A</td>
-<td align="left">1244 WESTERLY PARKWAY #43</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">WA3ENK</td>
-<td align="left">KREUTER, RODNEY A</td>
-<td align="left">319 MC BATH ST</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">WB2YWQ</td>
-<td align="left">SCHIANO, JEFFREY L</td>
-<td align="left">907 CRABAPPLE DR</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">WB3KZA</td>
-<td align="left">CAPLAN, WILLIAM L</td>
-<td align="left">1260 EDWARD ST</td>
 <td align="left">STATE COLLEGE</td>
 <td align="left">PA</td>
 <td align="right">16801</td>
@@ -921,38 +891,6 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="right">16801</td>
 </tr>
 <tr class="odd">
-<td align="left">KI4VYO</td>
-<td align="left">Traut, Elizabeth J</td>
-<td align="left">612 Walnut St</td>
-<td align="left">State College</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">AB3GL</td>
-<td align="left">Bilen, Sven G</td>
-<td align="left">435 W Fairmount Ave</td>
-<td align="left">State College</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">W3PBC</td>
-<td align="left">Polar Bear QRP Club</td>
-<td align="left">3002 Broadmoor Ln</td>
-<td align="left">State College</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">K3DWD</td>
-<td align="left">DECAPRIA, DAVID W</td>
-<td align="left">155 MITCH AVE</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">168017275</td>
-</tr>
-<tr class="odd">
 <td align="left">KB3UUG</td>
 <td align="left">DUGAN V, JAMES P</td>
 <td align="left">157B 1ST AVE</td>
@@ -961,30 +899,6 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="right">16801</td>
 </tr>
 <tr class="even">
-<td align="left">KG7SKM</td>
-<td align="left">Derk, Greg L</td>
-<td align="left">111 Washington Pl</td>
-<td align="left">State College</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
-<td align="left">W3SWL</td>
-<td align="left">Saylor, Brett D</td>
-<td align="left">375 HIGH POINT COVE</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">K3ROG</td>
-<td align="left">GILMORE, RICK O</td>
-<td align="left">608 EAST PROSPECT AVE</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
 <td align="left">KC3IAI</td>
 <td align="left">Vashaw, Todd A</td>
 <td align="left">916 Metz Ave</td>
@@ -992,7 +906,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KC3JAD</td>
 <td align="left">LOVAS, STEPHEN R</td>
 <td align="left">631 A WAUPELOMI DR</td>
@@ -1000,7 +914,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KC3JRV</td>
 <td align="left">Mellott, Franklin D</td>
 <td align="left">121 McCann Dr</td>
@@ -1008,7 +922,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KC3JXE</td>
 <td align="left">ALKAHMOUS, MOHAMMED M</td>
 <td align="left">300 WAUPELANI DRIVE</td>
@@ -1016,19 +930,11 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KC3JYD</td>
 <td align="left">Dangelo, Sarah R</td>
 <td align="left">1041 Greenfield Circle</td>
 <td align="left">State College</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="even">
-<td align="left">N3ABF</td>
-<td align="left">FOCHT, ADAM B</td>
-<td align="left">141 OCTOBER DRIVE</td>
-<td align="left">STATE COLLEGE</td>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
@@ -1073,14 +979,6 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="right">16801</td>
 </tr>
 <tr class="even">
-<td align="left">N3DV</td>
-<td align="left">BOYER, J ERIC</td>
-<td align="left">140 CLOVER RD</td>
-<td align="left">STATE COLLEGE</td>
-<td align="left">PA</td>
-<td align="right">16801</td>
-</tr>
-<tr class="odd">
 <td align="left">KC3MVK</td>
 <td align="left">Bharti, Smita</td>
 <td align="left">420 S Burrowes St</td>
@@ -1088,7 +986,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">KC3MVL</td>
 <td align="left">Zwart, Johan</td>
 <td align="left">420 S Burrowes St</td>
@@ -1096,7 +994,7 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KC3MXK</td>
 <td align="left">Heaney, Patrick J</td>
 <td align="left">119 Locust Ln #C5</td>
@@ -1104,10 +1002,1398 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 <td align="left">PA</td>
 <td align="right">16801</td>
 </tr>
+<tr class="odd">
+<td align="left">KC8KVD</td>
+<td align="left">LOGAN, JERRY R</td>
+<td align="left">136 CREEKSIDE DR.</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KG7SKM</td>
+<td align="left">Derk, Greg L</td>
+<td align="left">111 Washington Pl</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KI4VYO</td>
+<td align="left">Traut, Elizabeth J</td>
+<td align="left">612 Walnut St</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">N3ABF</td>
+<td align="left">FOCHT, ADAM B</td>
+<td align="left">141 OCTOBER DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">N3DV</td>
+<td align="left">BOYER, J ERIC</td>
+<td align="left">140 CLOVER RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">N3GOI</td>
+<td align="left">ESLINGER, STEVEN E</td>
+<td align="left">721 WINDSOR CT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">N5FKM</td>
+<td align="left">RYL, DR</td>
+<td align="left">165 HAYMAKER CIRCLE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168016979</td>
+</tr>
+<tr class="even">
+<td align="left">W3PBC</td>
+<td align="left">Polar Bear QRP Club</td>
+<td align="left">3002 Broadmoor Ln</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">W3SWL</td>
+<td align="left">Saylor, Brett D</td>
+<td align="left">375 HIGH POINT COVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">W3WAB</td>
+<td align="left">BICEHOUSE, WAYNE A</td>
+<td align="left">1244 WESTERLY PARKWAY #43</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">WA3ENK</td>
+<td align="left">KREUTER, RODNEY A</td>
+<td align="left">319 MC BATH ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">WB2YWQ</td>
+<td align="left">SCHIANO, JEFFREY L</td>
+<td align="left">907 CRABAPPLE DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3KZA</td>
+<td align="left">CAPLAN, WILLIAM L</td>
+<td align="left">1260 EDWARD ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
 </tbody>
 </table>
 <p>That looks good. Now let’s try the same thing with the 16803 file.</p>
+<p>I manually trimmed the 16803 file.</p>
+<pre class="r"><code>hams_803 &lt;- read.delim(file = 'data/tab/16803-trim.txt', header = FALSE)
+str(hams_803)</code></pre>
+<pre><code>## 'data.frame':    30 obs. of  27 variables:
+##  $ V1 : Factor w/ 1 level &quot;EN&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V2 : int  240084 293832 656288 684164 792479 793866 794518 881904 882355 2530588 ...
+##  $ V3 : logi  NA NA NA NA NA NA ...
+##  $ V4 : logi  NA NA NA NA NA NA ...
+##  $ V5 : Factor w/ 30 levels &quot;AA3PA&quot;,&quot;K3ARL&quot;,..: 2 6 20 23 26 27 28 29 30 25 ...
+##  $ V6 : Factor w/ 1 level &quot;L&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V7 : Factor w/ 28 levels &quot;L00143568&quot;,&quot;L00165528&quot;,..: 4 5 1 8 12 10 13 15 3 6 ...
+##  $ V8 : Factor w/ 28 levels &quot;ALSADAH, ALI&quot;,..: 14 13 23 22 18 10 19 3 7 11 ...
+##  $ V9 : Factor w/ 26 levels &quot;&quot;,&quot;ALI&quot;,&quot;BROOKE&quot;,..: 18 4 15 8 12 16 6 23 10 11 ...
+##  $ V10: Factor w/ 14 levels &quot;&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;,..: 5 4 8 3 13 14 12 6 4 10 ...
+##  $ V11: Factor w/ 26 levels &quot;&quot;,&quot;ALSADAH&quot;,&quot;Beck&quot;,..: 14 13 22 22 18 11 19 4 8 12 ...
+##  $ V12: Factor w/ 3 levels &quot;&quot;,&quot;Jr&quot;,&quot;JR&quot;: 1 1 1 1 1 1 3 3 1 1 ...
+##  $ V13: logi  NA NA NA NA NA NA ...
+##  $ V14: logi  NA NA NA NA NA NA ...
+##  $ V15: logi  NA NA NA NA NA NA ...
+##  $ V16: Factor w/ 27 levels &quot;1003 W AARON DR APT 9B&quot;,..: 9 19 26 26 23 7 11 2 18 6 ...
+##  $ V17: Factor w/ 3 levels &quot;State College&quot;,..: 2 2 2 2 2 2 2 2 2 1 ...
+##  $ V18: Factor w/ 1 level &quot;PA&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V19: int  16803 16803 168031427 16803 16803 16803 168033214 168033482 16803 16803 ...
+##  $ V20: logi  NA NA NA NA NA NA ...
+##  $ V21: Factor w/ 3 levels &quot;&quot;,&quot;ROBERT L HIBBERT&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V22: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ V23: int  4003448 9179268 3568177 16036311 17157439 16894586 17228149 17379223 4002051 7648736 ...
+##  $ V24: Factor w/ 2 levels &quot;B&quot;,&quot;I&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ V25: logi  NA NA NA NA NA NA ...
+##  $ V26: logi  NA NA NA NA NA NA ...
+##  $ V27: logi  NA NA NA NA NA NA ...</code></pre>
+<pre class="r"><code>trimmed_803 &lt;- hams_803 %&gt;%
+  select(., V5, V8, V9, V10, V11, V12, V16, V17, V18, V19, V23)
+trimmed_803 %&gt;% knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">V5</th>
+<th align="left">V8</th>
+<th align="left">V9</th>
+<th align="left">V10</th>
+<th align="left">V11</th>
+<th align="left">V12</th>
+<th align="left">V16</th>
+<th align="left">V17</th>
+<th align="left">V18</th>
+<th align="right">V19</th>
+<th align="right">V23</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">K3ARL</td>
+<td align="left">HOSTERMAN, KARL F</td>
+<td align="left">KARL</td>
+<td align="left">F</td>
+<td align="left">HOSTERMAN</td>
+<td align="left"></td>
+<td align="left">1367 N. ALLEN STREET</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">4003448</td>
+</tr>
+<tr class="even">
+<td align="left">KA3VJL</td>
+<td align="left">HAVRILLA, CATHERINE E</td>
+<td align="left">CATHERINE</td>
+<td align="left">E</td>
+<td align="left">HAVRILLA</td>
+<td align="left"></td>
+<td align="left">280 GHANER DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">9179268</td>
+</tr>
+<tr class="odd">
+<td align="left">N2BSS</td>
+<td align="left">NUCCIARONE, JEFFREY J</td>
+<td align="left">JEFFREY</td>
+<td align="left">J</td>
+<td align="left">NUCCIARONE</td>
+<td align="left"></td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168031427</td>
+<td align="right">3568177</td>
+</tr>
+<tr class="even">
+<td align="left">N3YUM</td>
+<td align="left">NUCCIARONE, CYNTHIA C</td>
+<td align="left">CYNTHIA</td>
+<td align="left">C</td>
+<td align="left">NUCCIARONE</td>
+<td align="left"></td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">16036311</td>
+</tr>
+<tr class="odd">
+<td align="left">W3JMW</td>
+<td align="left">KENNEY, EDWARD S</td>
+<td align="left">EDWARD</td>
+<td align="left">S</td>
+<td align="left">KENNEY</td>
+<td align="left"></td>
+<td align="left">625 WAYLAND PL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17157439</td>
+</tr>
+<tr class="even">
+<td align="left">W3SVI</td>
+<td align="left">FISHER, JOHN T</td>
+<td align="left">JOHN</td>
+<td align="left">T</td>
+<td align="left">FISHER</td>
+<td align="left"></td>
+<td align="left">1340 EAST PARK HILLS AVENUE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">16894586</td>
+</tr>
+<tr class="odd">
+<td align="left">W3XC</td>
+<td align="left">KREPPS JR, CHARLES R</td>
+<td align="left">CHARLES</td>
+<td align="left">R</td>
+<td align="left">KREPPS</td>
+<td align="left">JR</td>
+<td align="left">1650 S Cherry Hill Road</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033214</td>
+<td align="right">17228149</td>
+</tr>
+<tr class="even">
+<td align="left">WB3EDI</td>
+<td align="left">Bemis JR, Wilber G</td>
+<td align="left">Wilber</td>
+<td align="left">G</td>
+<td align="left">Bemis</td>
+<td align="left">JR</td>
+<td align="left">1009 TAYLOR ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033482</td>
+<td align="right">17379223</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3GDX</td>
+<td align="left">CRUST, DANIEL E</td>
+<td align="left">DANIEL</td>
+<td align="left">E</td>
+<td align="left">CRUST</td>
+<td align="left"></td>
+<td align="left">2528 BERNEL ROAD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">4002051</td>
+</tr>
+<tr class="even">
+<td align="left">W3DDD</td>
+<td align="left">Geleskie, Dominic M</td>
+<td align="left">Dominic</td>
+<td align="left">M</td>
+<td align="left">Geleskie</td>
+<td align="left"></td>
+<td align="left">119 Woodycrest Street</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">7648736</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3PWK</td>
+<td align="left">Jackson, Joshua P</td>
+<td align="left">Joshua</td>
+<td align="left">P</td>
+<td align="left">Jackson</td>
+<td align="left"></td>
+<td align="left">1348 Deerfield Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17035577</td>
+</tr>
+<tr class="even">
+<td align="left">N3LI</td>
+<td align="left">Coslo, Michael J</td>
+<td align="left">Michael</td>
+<td align="left">J</td>
+<td align="left">Coslo</td>
+<td align="left"></td>
+<td align="left">455 WESTGATE DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">3363744</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3QDD</td>
+<td align="left">Campbell, Tara S</td>
+<td align="left">Tara</td>
+<td align="left">S</td>
+<td align="left">Campbell</td>
+<td align="left"></td>
+<td align="left">215 Amblewood Way</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17249293</td>
+</tr>
+<tr class="even">
+<td align="left">K3PSU</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17411687</td>
+</tr>
+<tr class="odd">
+<td align="left">AA3PA</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17411687</td>
+</tr>
+<tr class="even">
+<td align="left">N3CRM</td>
+<td align="left">Maggi, Charles R</td>
+<td align="left">Charles</td>
+<td align="left">R</td>
+<td align="left">Maggi</td>
+<td align="left"></td>
+<td align="left">591 Devonshire Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">10140226</td>
+</tr>
+<tr class="odd">
+<td align="left">W3CCN</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">17411687</td>
+</tr>
+<tr class="even">
+<td align="left">KC2VCK</td>
+<td align="left">Warner, Chris K</td>
+<td align="left">Chris</td>
+<td align="left">K</td>
+<td align="left">Warner</td>
+<td align="left"></td>
+<td align="left">575 CRICKLEWOOD DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">18739722</td>
+</tr>
+<tr class="odd">
+<td align="left">KD3FLY</td>
+<td align="left">CARLSEN, WILLIAM S</td>
+<td align="left">WILLIAM</td>
+<td align="left">S</td>
+<td align="left">CARLSEN</td>
+<td align="left"></td>
+<td align="left">117 HARTSWICK AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">21709514</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JAB</td>
+<td align="left">DELOZIER JR, RICHARD F</td>
+<td align="left">RICHARD</td>
+<td align="left">F</td>
+<td align="left">DELOZIER</td>
+<td align="left">JR</td>
+<td align="left">669 EXETER COURT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26389221</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JUM</td>
+<td align="left">Beck, Daniel B</td>
+<td align="left">Daniel</td>
+<td align="left">B</td>
+<td align="left">Beck</td>
+<td align="left"></td>
+<td align="left">101 W Clearview Avenue</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26839373</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWO</td>
+<td align="left">WANG, HANMING</td>
+<td align="left">HANMING</td>
+<td align="left"></td>
+<td align="left">WANG</td>
+<td align="left"></td>
+<td align="left">201 Vario Blvd., Tremont Student Living, Rm. I-333C</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26813873</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWP</td>
+<td align="left">WANG, HANBO</td>
+<td align="left">HANBO</td>
+<td align="left"></td>
+<td align="left">WANG</td>
+<td align="left"></td>
+<td align="left">207 LEVASHIRE HTS APT 202</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26813907</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWW</td>
+<td align="left">HU, XIUOYAN</td>
+<td align="left">XIUOYAN</td>
+<td align="left"></td>
+<td align="left">HU</td>
+<td align="left"></td>
+<td align="left">201 VALRO VLVD 224C</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26813923</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWX</td>
+<td align="left">HUO, XIAODONG</td>
+<td align="left">XIAODONG</td>
+<td align="left"></td>
+<td align="left">HUO</td>
+<td align="left"></td>
+<td align="left">1800 MARTIN SE APT 2111</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26863860</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JXD</td>
+<td align="left">ALSADAH, ALI</td>
+<td align="left">ALI</td>
+<td align="left"></td>
+<td align="left">ALSADAH</td>
+<td align="left"></td>
+<td align="left">1003 W AARON DR APT 9B</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26813881</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KHW</td>
+<td align="left">STITZINGER, JOHN F</td>
+<td align="left">JOHN</td>
+<td align="left">F</td>
+<td align="left">STITZINGER</td>
+<td align="left"></td>
+<td align="left">1884 HUNTINGTON LN</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">26898312</td>
+</tr>
+<tr class="even">
+<td align="left">K9SDW</td>
+<td align="left">Muthler, Daniel R</td>
+<td align="left">Daniel</td>
+<td align="left">R</td>
+<td align="left">Muthler</td>
+<td align="left"></td>
+<td align="left">107 Driftwood Drive</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">22938823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LRX</td>
+<td align="left">FECKO, BROOKE I</td>
+<td align="left">BROOKE</td>
+<td align="left">I</td>
+<td align="left">FECKO</td>
+<td align="left"></td>
+<td align="left">663 BELKSHIRE DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+<td align="right">27649953</td>
+</tr>
+<tr class="even">
+<td align="left">K3EAC</td>
+<td align="left">Riggio Jr, Salvatore R</td>
+<td align="left">Salvatore</td>
+<td align="left">R</td>
+<td align="left">Riggio</td>
+<td align="left">Jr</td>
+<td align="left">810 Teaberry Lane</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">168033176</td>
+<td align="right">16241994</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>hams_16803 &lt;- trimmed_803 %&gt;%
+  select(., V5, V8, V16, V17, V18, V19) %&gt;%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19) %&gt;%
+  arrange(by = callsign)
+hams_16803 %&gt;% 
+  knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">callsign</th>
+<th align="left">name</th>
+<th align="left">address</th>
+<th align="left">city</th>
+<th align="left">state</th>
+<th align="right">zip</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AA3PA</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">K3ARL</td>
+<td align="left">HOSTERMAN, KARL F</td>
+<td align="left">1367 N. ALLEN STREET</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">K3EAC</td>
+<td align="left">Riggio Jr, Salvatore R</td>
+<td align="left">810 Teaberry Lane</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">168033176</td>
+</tr>
+<tr class="even">
+<td align="left">K3PSU</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">K9SDW</td>
+<td align="left">Muthler, Daniel R</td>
+<td align="left">107 Driftwood Drive</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KA3VJL</td>
+<td align="left">HAVRILLA, CATHERINE E</td>
+<td align="left">280 GHANER DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3PWK</td>
+<td align="left">Jackson, Joshua P</td>
+<td align="left">1348 Deerfield Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KB3QDD</td>
+<td align="left">Campbell, Tara S</td>
+<td align="left">215 Amblewood Way</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC2VCK</td>
+<td align="left">Warner, Chris K</td>
+<td align="left">575 CRICKLEWOOD DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JAB</td>
+<td align="left">DELOZIER JR, RICHARD F</td>
+<td align="left">669 EXETER COURT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JUM</td>
+<td align="left">Beck, Daniel B</td>
+<td align="left">101 W Clearview Avenue</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWO</td>
+<td align="left">WANG, HANMING</td>
+<td align="left">201 Vario Blvd., Tremont Student Living, Rm. I-333C</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWP</td>
+<td align="left">WANG, HANBO</td>
+<td align="left">207 LEVASHIRE HTS APT 202</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWW</td>
+<td align="left">HU, XIUOYAN</td>
+<td align="left">201 VALRO VLVD 224C</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWX</td>
+<td align="left">HUO, XIAODONG</td>
+<td align="left">1800 MARTIN SE APT 2111</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JXD</td>
+<td align="left">ALSADAH, ALI</td>
+<td align="left">1003 W AARON DR APT 9B</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KHW</td>
+<td align="left">STITZINGER, JOHN F</td>
+<td align="left">1884 HUNTINGTON LN</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3LRX</td>
+<td align="left">FECKO, BROOKE I</td>
+<td align="left">663 BELKSHIRE DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KD3FLY</td>
+<td align="left">CARLSEN, WILLIAM S</td>
+<td align="left">117 HARTSWICK AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">N2BSS</td>
+<td align="left">NUCCIARONE, JEFFREY J</td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168031427</td>
+</tr>
+<tr class="odd">
+<td align="left">N3CRM</td>
+<td align="left">Maggi, Charles R</td>
+<td align="left">591 Devonshire Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">N3LI</td>
+<td align="left">Coslo, Michael J</td>
+<td align="left">455 WESTGATE DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">N3YUM</td>
+<td align="left">NUCCIARONE, CYNTHIA C</td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">W3CCN</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">W3DDD</td>
+<td align="left">Geleskie, Dominic M</td>
+<td align="left">119 Woodycrest Street</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">W3JMW</td>
+<td align="left">KENNEY, EDWARD S</td>
+<td align="left">625 WAYLAND PL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">W3SVI</td>
+<td align="left">FISHER, JOHN T</td>
+<td align="left">1340 EAST PARK HILLS AVENUE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">W3XC</td>
+<td align="left">KREPPS JR, CHARLES R</td>
+<td align="left">1650 S Cherry Hill Road</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033214</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3EDI</td>
+<td align="left">Bemis JR, Wilber G</td>
+<td align="left">1009 TAYLOR ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033482</td>
+</tr>
+<tr class="even">
+<td align="left">WB3GDX</td>
+<td align="left">CRUST, DANIEL E</td>
+<td align="left">2528 BERNEL ROAD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+</tbody>
+</table>
+<p>Now, we should be able to merge them.</p>
+<pre class="r"><code>hams_01_03 &lt;- rbind(hams_16801, hams_16803)
+hams_01_03 &lt;- hams_01_03 %&gt;%
+  arrange(by = callsign)
+hams_01_03 %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">callsign</th>
+<th align="left">name</th>
+<th align="left">address</th>
+<th align="left">city</th>
+<th align="left">state</th>
+<th align="right">zip</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AA3SQ</td>
+<td align="left">KREUTER, JOYCE</td>
+<td align="left">319 MC BATH ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168012744</td>
+</tr>
+<tr class="even">
+<td align="left">AB3GL</td>
+<td align="left">Bilen, Sven G</td>
+<td align="left">435 W Fairmount Ave</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">K3CWP</td>
+<td align="left">PRESTIA JR, CARMINE W</td>
+<td align="left">1265 SMITHFIELD ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168016432</td>
+</tr>
+<tr class="even">
+<td align="left">K3DWD</td>
+<td align="left">DECAPRIA, DAVID W</td>
+<td align="left">155 MITCH AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168017275</td>
+</tr>
+<tr class="odd">
+<td align="left">K3HOT</td>
+<td align="left">GUISE, GREGORY W</td>
+<td align="left">3133 Williamsburg Ct</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">K3ROG</td>
+<td align="left">GILMORE, RICK O</td>
+<td align="left">608 EAST PROSPECT AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KA3BMU</td>
+<td align="left">WRBICAN, WILLIAM J</td>
+<td align="left">1172 DORUM AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KA3PNC</td>
+<td align="left">KISSEL, DARLING F</td>
+<td align="left">1520 ASH AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3CZD</td>
+<td align="left">LONG, ROY A</td>
+<td align="left">240 Oakwood Dr</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KB3ESJ</td>
+<td align="left">Tancibok, Daniel A</td>
+<td align="left">1873 JAMES AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3FKJ</td>
+<td align="left">Sherman, Joseph S</td>
+<td align="left">371 High Point Cove</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KB3OUF</td>
+<td align="left">Marsh, Michael J</td>
+<td align="left">716 E Beaver Ave</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3UUG</td>
+<td align="left">DUGAN V, JAMES P</td>
+<td align="left">157B 1ST AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3IAI</td>
+<td align="left">Vashaw, Todd A</td>
+<td align="left">916 Metz Ave</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JAD</td>
+<td align="left">LOVAS, STEPHEN R</td>
+<td align="left">631 A WAUPELOMI DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JRV</td>
+<td align="left">Mellott, Franklin D</td>
+<td align="left">121 McCann Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JXE</td>
+<td align="left">ALKAHMOUS, MOHAMMED M</td>
+<td align="left">300 WAUPELANI DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JYD</td>
+<td align="left">Dangelo, Sarah R</td>
+<td align="left">1041 Greenfield Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LSE</td>
+<td align="left">SHABEEB, IMAD</td>
+<td align="left">1123B S PUGH ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MCI</td>
+<td align="left">DOWDY, MATTHEW P</td>
+<td align="left">123 BIRCHTREE COURT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MCJ</td>
+<td align="left">ESAKOV, PETE</td>
+<td align="left">271 FLORENCE WAY</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MGK</td>
+<td align="left">YOU, WENYU</td>
+<td align="left">215 W FARRMONT AV 214</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MPZ</td>
+<td align="left">Surendran, Vidullan</td>
+<td align="left">1105 W Beaver Ave</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MVK</td>
+<td align="left">Bharti, Smita</td>
+<td align="left">420 S Burrowes St</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MVL</td>
+<td align="left">Zwart, Johan</td>
+<td align="left">420 S Burrowes St</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MXK</td>
+<td align="left">Heaney, Patrick J</td>
+<td align="left">119 Locust Ln #C5</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KC8KVD</td>
+<td align="left">LOGAN, JERRY R</td>
+<td align="left">136 CREEKSIDE DR.</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">KG7SKM</td>
+<td align="left">Derk, Greg L</td>
+<td align="left">111 Washington Pl</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">KI4VYO</td>
+<td align="left">Traut, Elizabeth J</td>
+<td align="left">612 Walnut St</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">N3ABF</td>
+<td align="left">FOCHT, ADAM B</td>
+<td align="left">141 OCTOBER DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">N3DV</td>
+<td align="left">BOYER, J ERIC</td>
+<td align="left">140 CLOVER RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">N3GOI</td>
+<td align="left">ESLINGER, STEVEN E</td>
+<td align="left">721 WINDSOR CT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">N5FKM</td>
+<td align="left">RYL, DR</td>
+<td align="left">165 HAYMAKER CIRCLE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168016979</td>
+</tr>
+<tr class="even">
+<td align="left">W3PBC</td>
+<td align="left">Polar Bear QRP Club</td>
+<td align="left">3002 Broadmoor Ln</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">W3SWL</td>
+<td align="left">Saylor, Brett D</td>
+<td align="left">375 HIGH POINT COVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">W3WAB</td>
+<td align="left">BICEHOUSE, WAYNE A</td>
+<td align="left">1244 WESTERLY PARKWAY #43</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">WA3ENK</td>
+<td align="left">KREUTER, RODNEY A</td>
+<td align="left">319 MC BATH ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">WB2YWQ</td>
+<td align="left">SCHIANO, JEFFREY L</td>
+<td align="left">907 CRABAPPLE DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3KZA</td>
+<td align="left">CAPLAN, WILLIAM L</td>
+<td align="left">1260 EDWARD ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16801</td>
+</tr>
+<tr class="even">
+<td align="left">AA3PA</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">K3ARL</td>
+<td align="left">HOSTERMAN, KARL F</td>
+<td align="left">1367 N. ALLEN STREET</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">K3EAC</td>
+<td align="left">Riggio Jr, Salvatore R</td>
+<td align="left">810 Teaberry Lane</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">168033176</td>
+</tr>
+<tr class="odd">
+<td align="left">K3PSU</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">K9SDW</td>
+<td align="left">Muthler, Daniel R</td>
+<td align="left">107 Driftwood Drive</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KA3VJL</td>
+<td align="left">HAVRILLA, CATHERINE E</td>
+<td align="left">280 GHANER DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KB3PWK</td>
+<td align="left">Jackson, Joshua P</td>
+<td align="left">1348 Deerfield Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3QDD</td>
+<td align="left">Campbell, Tara S</td>
+<td align="left">215 Amblewood Way</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC2VCK</td>
+<td align="left">Warner, Chris K</td>
+<td align="left">575 CRICKLEWOOD DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JAB</td>
+<td align="left">DELOZIER JR, RICHARD F</td>
+<td align="left">669 EXETER COURT</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JUM</td>
+<td align="left">Beck, Daniel B</td>
+<td align="left">101 W Clearview Avenue</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWO</td>
+<td align="left">WANG, HANMING</td>
+<td align="left">201 Vario Blvd., Tremont Student Living, Rm. I-333C</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWP</td>
+<td align="left">WANG, HANBO</td>
+<td align="left">207 LEVASHIRE HTS APT 202</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWW</td>
+<td align="left">HU, XIUOYAN</td>
+<td align="left">201 VALRO VLVD 224C</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWX</td>
+<td align="left">HUO, XIAODONG</td>
+<td align="left">1800 MARTIN SE APT 2111</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JXD</td>
+<td align="left">ALSADAH, ALI</td>
+<td align="left">1003 W AARON DR APT 9B</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KHW</td>
+<td align="left">STITZINGER, JOHN F</td>
+<td align="left">1884 HUNTINGTON LN</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LRX</td>
+<td align="left">FECKO, BROOKE I</td>
+<td align="left">663 BELKSHIRE DRIVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">KD3FLY</td>
+<td align="left">CARLSEN, WILLIAM S</td>
+<td align="left">117 HARTSWICK AVE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">N2BSS</td>
+<td align="left">NUCCIARONE, JEFFREY J</td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168031427</td>
+</tr>
+<tr class="even">
+<td align="left">N3CRM</td>
+<td align="left">Maggi, Charles R</td>
+<td align="left">591 Devonshire Dr</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">N3LI</td>
+<td align="left">Coslo, Michael J</td>
+<td align="left">455 WESTGATE DR</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">N3YUM</td>
+<td align="left">NUCCIARONE, CYNTHIA C</td>
+<td align="left">730 CORNWALL RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">W3CCN</td>
+<td align="left">Happy Valley Amateur Radio Club</td>
+<td align="left">1649 Dogwood Circle</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">W3DDD</td>
+<td align="left">Geleskie, Dominic M</td>
+<td align="left">119 Woodycrest Street</td>
+<td align="left">State College</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">W3JMW</td>
+<td align="left">KENNEY, EDWARD S</td>
+<td align="left">625 WAYLAND PL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="even">
+<td align="left">W3SVI</td>
+<td align="left">FISHER, JOHN T</td>
+<td align="left">1340 EAST PARK HILLS AVENUE</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+<tr class="odd">
+<td align="left">W3XC</td>
+<td align="left">KREPPS JR, CHARLES R</td>
+<td align="left">1650 S Cherry Hill Road</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033214</td>
+</tr>
+<tr class="even">
+<td align="left">WB3EDI</td>
+<td align="left">Bemis JR, Wilber G</td>
+<td align="left">1009 TAYLOR ST</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">168033482</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3GDX</td>
+<td align="left">CRUST, DANIEL E</td>
+<td align="left">2528 BERNEL ROAD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16803</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next steps</h1>
+<ol style="list-style-type: decimal">
+<li>Normalize the address, city, and zip fields.</li>
+<li>Automate queries to the FCC database.</li>
+<li>Expand the range of licensees.</li>
+<li>Focus on new licensees (last year?)</li>
+</ol>
 </div>
 
 
