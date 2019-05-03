@@ -20,20 +20,44 @@ Data were gathered for licenses active in the last two years from the FCC ULS da
 
 <https://wireless2.fcc.gov/UlsApp/UlsSearch/searchAmateur.jsp>
 
-The 16801, 16802, and 16803 zip codes were selected.
 
+## Search Criteria
+
+Operator Class: All
+
+State: Pennsylvania
+
+ZIP code: 
+
+A list of zip codes in Centre County can be found here:
+
+<http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&State=pa&StName=Pennsylvania&StFIPS=42&FIPS=42027>
+
+On 2019-04-30 I ran 16823. 
+
+The 16801, 16802, and 16803 zip codes were run previously.
+
+License Detail: Status: Active
+
+Date Information:
+    Date Type: Last Action Date
+    Date: From 4/30/2010 to 4/30/2019
+    
+## Retrieving search results
+
+Clicking on the `Query Download` button opens a page where an email can be given.
+The email will be sent a download link when the search file is ready.
 Once the FCC database provided URLs, these 'pipe'-delimited data files were downloaded. The raw files are in `data/pipe`.
 
 ```{r}
 data_dir <- 'data/pipe'
 ```
 
-
 # Cleaning
   
 ## Import
 
-I will focus on the `*all-16801.txt` and `*all-16803.txt` files since these are larger and more comprehensive.
+### 16801
 
 ```{r}
 hams_801 <- read.delim(file = paste0(data_dir, '/fcc-ham-all-16801.txt'), sep = '|', header = FALSE)
@@ -69,7 +93,10 @@ hams_16801 %>% knitr::kable(.)
 ```
  
  That looks good.
- Now let's try the same thing with the 16803 file.
+ 
+### 16803
+ 
+Now let's try the same thing with the 16803 file.
  
 I manually trimmed the 16803 file.
 
@@ -103,9 +130,45 @@ hams_01_03 %>%
   knitr::kable()
 ```
 
+### 16823
+
+Let's try this with 16823 (Bellefonte).
+
+```{r}
+hams_823 <- read.delim(file = 'data/tab/16823-trim.txt', header = FALSE)
+str(hams_823)
+```
+
+```{r}
+trimmed_823 <- hams_823 %>%
+  select(., V5, V8, V9, V10, V11, V12, V16, V17, V18, V19, V23)
+trimmed_823 %>% knitr::kable(.)
+```
+
+```{r}
+hams_16823 <- trimmed_823 %>%
+  select(., V5, V8, V16, V17, V18, V19) %>%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19) %>%
+  arrange(by = callsign)
+hams_16823 %>% 
+  knitr::kable(.)
+```
+
+### 16802
+
+```{r}
+hams <- read.delim(file = 'data/tab/16802-trim.txt', header = FALSE)
+hams %>%
+  select(., V5, V8, V16, V17, V18, V19) %>%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, 
+         state = V18, zip = V19) %>%
+  arrange(., by = callsign) %>%
+  knitr::kable(.)
+```
+
 # Next steps
 
 1. Normalize the address, city, and zip fields.
-2. Automate queries to the FCC database.
+2. Automate queries to the FCC database if possible.
 3. Expand the range of licensees.
 4. Focus on new licensees (last year?)

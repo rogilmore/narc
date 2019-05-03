@@ -191,7 +191,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">fcc-licensees</h1>
 <h4 class="author">Rick O. Gilmore</h4>
-<h4 class="date">2019-04-13 12:16:31</h4>
+<h4 class="date">2019-05-03 09:36:40</h4>
 
 </div>
 
@@ -204,15 +204,30 @@ $(document).ready(function () {
 <h1>Gathering</h1>
 <p>Data were gathered for licenses active in the last two years from the FCC ULS database:</p>
 <p><a href="https://wireless2.fcc.gov/UlsApp/UlsSearch/searchAmateur.jsp" class="uri">https://wireless2.fcc.gov/UlsApp/UlsSearch/searchAmateur.jsp</a></p>
-<p>The 16801, 16802, and 16803 zip codes were selected.</p>
-<p>Once the FCC database provided URLs, these ‘pipe’-delimited data files were downloaded. The raw files are in <code>data/pipe</code>.</p>
+<div id="search-criteria" class="section level2">
+<h2>Search Criteria</h2>
+<p>Operator Class: All</p>
+<p>State: Pennsylvania</p>
+<p>ZIP code:</p>
+<p>A list of zip codes in Centre County can be found here:</p>
+<p><a href="http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&amp;State=pa&amp;StName=Pennsylvania&amp;StFIPS=42&amp;FIPS=42027" class="uri">http://ciclt.net/sn/clt/capitolimpact/gw_ziplist.aspx?ClientCode=capitolimpact&amp;State=pa&amp;StName=Pennsylvania&amp;StFIPS=42&amp;FIPS=42027</a></p>
+<p>On 2019-04-30 I ran 16823.</p>
+<p>The 16801, 16802, and 16803 zip codes were run previously.</p>
+<p>License Detail: Status: Active</p>
+<p>Date Information: Date Type: Last Action Date Date: From 4/30/2010 to 4/30/2019</p>
+</div>
+<div id="retrieving-search-results" class="section level2">
+<h2>Retrieving search results</h2>
+<p>Clicking on the <code>Query Download</code> button opens a page where an email can be given. The email will be sent a download link when the search file is ready. Once the FCC database provided URLs, these ‘pipe’-delimited data files were downloaded. The raw files are in <code>data/pipe</code>.</p>
 <pre class="r"><code>data_dir &lt;- 'data/pipe'</code></pre>
+</div>
 </div>
 <div id="cleaning" class="section level1">
 <h1>Cleaning</h1>
 <div id="import" class="section level2">
 <h2>Import</h2>
-<p>I will focus on the <code>*all-16801.txt</code> and <code>*all-16803.txt</code> files since these are larger and more comprehensive.</p>
+<div id="section" class="section level3">
+<h3>16801</h3>
 <pre class="r"><code>hams_801 &lt;- read.delim(file = paste0(data_dir, '/fcc-ham-all-16801.txt'), sep = '|', header = FALSE)</code></pre>
 <p>The file is a mess. Callsigns are mixed up with dates. There must be some problem in the parsing. I opened the file in a text editor, changed the pipes to tabs, and trimmed the file to include the names and addresses, and saved it in <code>data/tab/</code>.</p>
 <pre class="r"><code>hams_801 &lt;- read.delim(file = 'data/tab/16801-trim.txt', header = FALSE)
@@ -1108,7 +1123,11 @@ hams_16801 %&gt;% knitr::kable(.)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>That looks good. Now let’s try the same thing with the 16803 file.</p>
+<p>That looks good.</p>
+</div>
+<div id="section-1" class="section level3">
+<h3>16803</h3>
+<p>Now let’s try the same thing with the 16803 file.</p>
 <p>I manually trimmed the 16803 file.</p>
 <pre class="r"><code>hams_803 &lt;- read.delim(file = 'data/tab/16803-trim.txt', header = FALSE)
 str(hams_803)</code></pre>
@@ -2385,12 +2404,2214 @@ hams_01_03 %&gt;%
 </tbody>
 </table>
 </div>
+<div id="section-2" class="section level3">
+<h3>16823</h3>
+<p>Let’s try this with 16823 (Bellefonte).</p>
+<pre class="r"><code>hams_823 &lt;- read.delim(file = 'data/tab/16823-trim.txt', header = FALSE)
+str(hams_823)</code></pre>
+<pre><code>## 'data.frame':    65 obs. of  27 variables:
+##  $ V1 : Factor w/ 1 level &quot;EN&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V2 : int  240605 243364 291107 291324 291549 339066 489897 490129 668732 670805 ...
+##  $ V3 : logi  NA NA NA NA NA NA ...
+##  $ V4 : logi  NA NA NA NA NA NA ...
+##  $ V5 : Factor w/ 64 levels &quot;K3EDD&quot;,&quot;K3HJI&quot;,..: 1 7 8 9 10 11 35 36 42 43 ...
+##  $ V6 : Factor w/ 2 levels &quot;L&quot;,&quot;O&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V7 : Factor w/ 64 levels &quot;L00150869&quot;,&quot;L00181548&quot;,..: 9 24 23 13 30 21 15 6 20 14 ...
+##  $ V8 : Factor w/ 64 levels &quot;ADHIKARI, BIRASPATI&quot;,..: 32 48 5 11 51 33 53 30 37 63 ...
+##  $ V9 : Factor w/ 59 levels &quot;&quot;,&quot;ALBERT&quot;,&quot;ANGUS&quot;,..: 19 47 33 43 24 40 24 22 17 16 ...
+##  $ V10: Factor w/ 18 levels &quot;&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,..: 9 9 14 9 9 8 16 15 2 11 ...
+##  $ V11: Factor w/ 60 levels &quot;&quot;,&quot;ADHIKARI&quot;,..: 31 46 6 11 49 32 51 29 36 60 ...
+##  $ V12: Factor w/ 6 levels &quot;&quot;,&quot;404&quot;,&quot;II&quot;,..: 1 1 1 1 1 6 1 1 1 5 ...
+##  $ V13: logi  NA NA NA NA NA NA ...
+##  $ V14: logi  NA NA NA NA NA NA ...
+##  $ V15: logi  NA NA NA NA NA NA ...
+##  $ V16: Factor w/ 61 levels &quot;&quot;,&quot;100 HAWK NEST WAY&quot;,..: 9 46 36 8 12 22 37 60 27 11 ...
+##  $ V17: Factor w/ 5 levels &quot;&quot;,&quot;Bellefonte&quot;,..: 5 3 3 2 2 2 3 3 2 3 ...
+##  $ V18: Factor w/ 2 levels &quot;&quot;,&quot;PA&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ V19: int  16823 168234224 16823 16823 16823 16823 16823 16823 16823 16823 ...
+##  $ V20: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ V21: Factor w/ 10 levels &quot;&quot;,&quot;Albert S. Catalano Jr.&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ V22: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ V23: int  4475786 10566230 10550051 6647416 13766191 10368967 6996730 3367224 9963612 5043708 ...
+##  $ V24: Factor w/ 3 levels &quot;&quot;,&quot;B&quot;,&quot;I&quot;: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ V25: logi  NA NA NA NA NA NA ...
+##  $ V26: logi  NA NA NA NA NA NA ...
+##  $ V27: logi  NA NA NA NA NA NA ...</code></pre>
+<pre class="r"><code>trimmed_823 &lt;- hams_823 %&gt;%
+  select(., V5, V8, V9, V10, V11, V12, V16, V17, V18, V19, V23)
+trimmed_823 %&gt;% knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">V5</th>
+<th align="left">V8</th>
+<th align="left">V9</th>
+<th align="left">V10</th>
+<th align="left">V11</th>
+<th align="left">V12</th>
+<th align="left">V16</th>
+<th align="left">V17</th>
+<th align="left">V18</th>
+<th align="right">V19</th>
+<th align="right">V23</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">K3EDD</td>
+<td align="left">HINKLE, EDWARD J</td>
+<td align="left">EDWARD</td>
+<td align="left">J</td>
+<td align="left">HINKLE</td>
+<td align="left"></td>
+<td align="left">108 CHAPEL HILL CIRCLE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">4475786</td>
+</tr>
+<tr class="even">
+<td align="left">K3YGD</td>
+<td align="left">ROBISON, PHYLLIS J</td>
+<td align="left">PHYLLIS</td>
+<td align="left">J</td>
+<td align="left">ROBISON</td>
+<td align="left"></td>
+<td align="left">257 THOMAS HILL RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168234224</td>
+<td align="right">10566230</td>
+</tr>
+<tr class="odd">
+<td align="left">KA3MLK</td>
+<td align="left">BARNHART, JON P</td>
+<td align="left">JON</td>
+<td align="left">P</td>
+<td align="left">BARNHART</td>
+<td align="left"></td>
+<td align="left">1794 NITTANY VALLEY DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">10550051</td>
+</tr>
+<tr class="even">
+<td align="left">KA3NHF</td>
+<td align="left">Burns, Matthew J</td>
+<td align="left">Matthew</td>
+<td align="left">J</td>
+<td align="left">Burns</td>
+<td align="left"></td>
+<td align="left">1070 Zion Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">6647416</td>
+</tr>
+<tr class="odd">
+<td align="left">KA3OIC</td>
+<td align="left">SALAMON, GARY J</td>
+<td align="left">GARY</td>
+<td align="left">J</td>
+<td align="left">SALAMON</td>
+<td align="left"></td>
+<td align="left">116 Paradise Road</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">13766191</td>
+</tr>
+<tr class="even">
+<td align="left">KB1BH</td>
+<td align="left">JOHNSON Mr, KENNETH H</td>
+<td align="left">KENNETH</td>
+<td align="left">H</td>
+<td align="left">JOHNSON</td>
+<td align="left">Mr</td>
+<td align="left">1322 Joanna Dr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">10368967</td>
+</tr>
+<tr class="odd">
+<td align="left">KD3AA</td>
+<td align="left">SETTLES, GARY S</td>
+<td align="left">GARY</td>
+<td align="left">S</td>
+<td align="left">SETTLES</td>
+<td align="left"></td>
+<td align="left">2053 VALLEY VIEW RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">6996730</td>
+</tr>
+<tr class="even">
+<td align="left">KD3MY</td>
+<td align="left">HAUBE, FRANCES R</td>
+<td align="left">FRANCES</td>
+<td align="left">R</td>
+<td align="left">HAUBE</td>
+<td align="left"></td>
+<td align="left">830 BLANCHARD ST</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">3367224</td>
+</tr>
+<tr class="odd">
+<td align="left">N2YBV</td>
+<td align="left">LAREMORE, DOUGLAS A</td>
+<td align="left">DOUGLAS</td>
+<td align="left">A</td>
+<td align="left">LAREMORE</td>
+<td align="left"></td>
+<td align="left">141 Chicory Ave</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">9963612</td>
+</tr>
+<tr class="even">
+<td align="left">N3BXP</td>
+<td align="left">WILSON JR, DONALD L</td>
+<td align="left">DONALD</td>
+<td align="left">L</td>
+<td align="left">WILSON</td>
+<td align="left">JR</td>
+<td align="left">114 KATHRYN DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">5043708</td>
+</tr>
+<tr class="odd">
+<td align="left">N3CCD</td>
+<td align="left">BLAIR, HERBERT W</td>
+<td align="left">HERBERT</td>
+<td align="left">W</td>
+<td align="left">BLAIR</td>
+<td align="left"></td>
+<td align="left">155 WILLOW DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">18051789</td>
+</tr>
+<tr class="even">
+<td align="left">N3EB</td>
+<td align="left">BROOKS, ERIC L</td>
+<td align="left">ERIC</td>
+<td align="left">L</td>
+<td align="left">BROOKS</td>
+<td align="left"></td>
+<td align="left">170 JODON AVE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">5910682</td>
+</tr>
+<tr class="odd">
+<td align="left">N3EMD</td>
+<td align="left">BROOKS, JANICE E</td>
+<td align="left">JANICE</td>
+<td align="left">E</td>
+<td align="left">BROOKS</td>
+<td align="left"></td>
+<td align="left">170 JODON AVE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">12823647</td>
+</tr>
+<tr class="even">
+<td align="left">N3MVA</td>
+<td align="left">EDMONDS, MICHAEL L</td>
+<td align="left">MICHAEL</td>
+<td align="left">L</td>
+<td align="left">EDMONDS</td>
+<td align="left"></td>
+<td align="left">329 MEADOW LN</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">9570318</td>
+</tr>
+<tr class="odd">
+<td align="left">N3OKC</td>
+<td align="left">ROKITA, JOSEPH J</td>
+<td align="left">JOSEPH</td>
+<td align="left">J</td>
+<td align="left">ROKITA</td>
+<td align="left"></td>
+<td align="left">306 Wiltshire Drive</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">3359957</td>
+</tr>
+<tr class="even">
+<td align="left">N3UDV</td>
+<td align="left">EICHFELD, CHAD M</td>
+<td align="left">CHAD</td>
+<td align="left">M</td>
+<td align="left">EICHFELD</td>
+<td align="left"></td>
+<td align="left">261 JEFFERSON CIRCLE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">11675840</td>
+</tr>
+<tr class="odd">
+<td align="left">N3VKS</td>
+<td align="left">GROFF, RICHARD D</td>
+<td align="left">RICHARD</td>
+<td align="left">D</td>
+<td align="left">GROFF</td>
+<td align="left"></td>
+<td align="left">273 Meadow Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">12618419</td>
+</tr>
+<tr class="even">
+<td align="left">N3VMV</td>
+<td align="left">Miller, KATHRYN P</td>
+<td align="left">KATHRYN</td>
+<td align="left">P</td>
+<td align="left">Miller</td>
+<td align="left"></td>
+<td align="left">501 St Paul CIr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">3339710</td>
+</tr>
+<tr class="odd">
+<td align="left">N3XNO</td>
+<td align="left">SEDGWICK, JOHANNA L</td>
+<td align="left">JOHANNA</td>
+<td align="left">L</td>
+<td align="left">SEDGWICK</td>
+<td align="left"></td>
+<td align="left">213 E Lamb S</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">15048580</td>
+</tr>
+<tr class="even">
+<td align="left">N9FXZ</td>
+<td align="left">DE VILBISS, DAVID W</td>
+<td align="left">DAVID</td>
+<td align="left">W</td>
+<td align="left">DE VILBISS</td>
+<td align="left"></td>
+<td align="left">103 FLINT CT</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">2874279</td>
+</tr>
+<tr class="odd">
+<td align="left">W3CCC</td>
+<td align="left">WIDMANN, THOMAS W</td>
+<td align="left">THOMAS</td>
+<td align="left">W</td>
+<td align="left">WIDMANN</td>
+<td align="left"></td>
+<td align="left">2092 BUFFALO RUN RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168238015</td>
+<td align="right">18208041</td>
+</tr>
+<tr class="even">
+<td align="left">W3GKD</td>
+<td align="left">ROBISON, JOHN J</td>
+<td align="left">JOHN</td>
+<td align="left">J</td>
+<td align="left">ROBISON</td>
+<td align="left"></td>
+<td align="left">257 THOMAS HILL RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168234224</td>
+<td align="right">15387996</td>
+</tr>
+<tr class="odd">
+<td align="left">WA3KVQ</td>
+<td align="left">WILSON, RAYMOND C</td>
+<td align="left">RAYMOND</td>
+<td align="left">C</td>
+<td align="left">WILSON</td>
+<td align="left"></td>
+<td align="left">906 GREEN AVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168232804</td>
+<td align="right">14651939</td>
+</tr>
+<tr class="even">
+<td align="left">WB3AEI</td>
+<td align="left">Mulfinger, Charles E</td>
+<td align="left">Charles</td>
+<td align="left">E</td>
+<td align="left">Mulfinger</td>
+<td align="left"></td>
+<td align="left">131 Stover Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">3332392</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3DND</td>
+<td align="left">Murphy III, William G</td>
+<td align="left">William</td>
+<td align="left">G</td>
+<td align="left">Murphy</td>
+<td align="left">III</td>
+<td align="left">127 WEST ST</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">6596233</td>
+</tr>
+<tr class="even">
+<td align="left">KB3EFD</td>
+<td align="left">Stewart II, James G</td>
+<td align="left">James</td>
+<td align="left">G</td>
+<td align="left">Stewart</td>
+<td align="left">II</td>
+<td align="left">129 N. Monroe St. Apt C</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">3344306</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3GUP</td>
+<td align="left">Karl, James H</td>
+<td align="left">James</td>
+<td align="left">H</td>
+<td align="left">Karl</td>
+<td align="left"></td>
+<td align="left">2924 Buffalo Run Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">5107438</td>
+</tr>
+<tr class="even">
+<td align="left">KI4ADY</td>
+<td align="left">Watson, Barbara M</td>
+<td align="left">Barbara</td>
+<td align="left">M</td>
+<td align="left">Watson</td>
+<td align="left"></td>
+<td align="left">1307 Laura Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">8919086</td>
+</tr>
+<tr class="odd">
+<td align="left">KI4ADZ</td>
+<td align="left">Watson, Stephen P</td>
+<td align="left">Stephen</td>
+<td align="left">P</td>
+<td align="left">Watson</td>
+<td align="left"></td>
+<td align="left">1307 Laura Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">8919094</td>
+</tr>
+<tr class="even">
+<td align="left">KC0QJX</td>
+<td align="left">Vanauken, Gordon C</td>
+<td align="left">Gordon</td>
+<td align="left">C</td>
+<td align="left">Vanauken</td>
+<td align="left"></td>
+<td align="left">210 Edward Drive</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">9233909</td>
+</tr>
+<tr class="odd">
+<td align="left">K3UZ</td>
+<td align="left">KUZIO, WILLIAM D</td>
+<td align="left">WILLIAM</td>
+<td align="left">D</td>
+<td align="left">KUZIO</td>
+<td align="left"></td>
+<td align="left">1013 W SPRINGFIELD DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">4466231</td>
+</tr>
+<tr class="even">
+<td align="left">KB3LGV</td>
+<td align="left">Bierly, Jerry L</td>
+<td align="left">Jerry</td>
+<td align="left">L</td>
+<td align="left">Bierly</td>
+<td align="left"></td>
+<td align="left">2144 Buffalo Run Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">11099793</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3NZP</td>
+<td align="left">CONKLIN, DAVID</td>
+<td align="left">DAVID</td>
+<td align="left"></td>
+<td align="left">CONKLIN</td>
+<td align="left"></td>
+<td align="left">119 MIDDLE STREET</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">15503808</td>
+</tr>
+<tr class="even">
+<td align="left">KC9LWZ</td>
+<td align="left">Arthur, Dan K</td>
+<td align="left">Dan</td>
+<td align="left">K</td>
+<td align="left">Arthur</td>
+<td align="left"></td>
+<td align="left">143 Jonathan Ln</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">16676835</td>
+</tr>
+<tr class="odd">
+<td align="left">K3SBA</td>
+<td align="left">ALLISON, SHANNON B</td>
+<td align="left">SHANNON</td>
+<td align="left">B</td>
+<td align="left">ALLISON</td>
+<td align="left"></td>
+<td align="left">106 FIELDSTONE LANE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">16204406</td>
+</tr>
+<tr class="even">
+<td align="left">KR3C</td>
+<td align="left">CABRAL, RICHARD J</td>
+<td align="left">RICHARD</td>
+<td align="left">J</td>
+<td align="left">CABRAL</td>
+<td align="left"></td>
+<td align="left">1340 AXEMANN RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168238108</td>
+<td align="right">4042685</td>
+</tr>
+<tr class="odd">
+<td align="left">K3RRA</td>
+<td align="left">Leslie, Donald C</td>
+<td align="left">Donald</td>
+<td align="left">C</td>
+<td align="left">Leslie</td>
+<td align="left"></td>
+<td align="left">100 HAWK NEST WAY</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">14995617</td>
+</tr>
+<tr class="even">
+<td align="left">N3CDX</td>
+<td align="left">CATALANO JR, ALBERT S</td>
+<td align="left">ALBERT</td>
+<td align="left">S</td>
+<td align="left">CATALANO</td>
+<td align="left">JR</td>
+<td align="left">137 Beaver Farm Ln.</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">10483956</td>
+</tr>
+<tr class="odd">
+<td align="left">W3MJO</td>
+<td align="left">MILLER, JOSHUA A</td>
+<td align="left">JOSHUA</td>
+<td align="left">A</td>
+<td align="left">MILLER</td>
+<td align="left"></td>
+<td align="left">360 W Lamb St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">14320519</td>
+</tr>
+<tr class="even">
+<td align="left">KB3SHV</td>
+<td align="left">STRALEY, LEROY E</td>
+<td align="left">LEROY</td>
+<td align="left">E</td>
+<td align="left">STRALEY</td>
+<td align="left"></td>
+<td align="left">157 ROSEHIIL DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">18491084</td>
+</tr>
+<tr class="odd">
+<td align="left">W3TNE</td>
+<td align="left">Eby, Thomas N</td>
+<td align="left">Thomas</td>
+<td align="left">N</td>
+<td align="left">Eby</td>
+<td align="left"></td>
+<td align="left">232 Armagast Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">18613034</td>
+</tr>
+<tr class="even">
+<td align="left">KB3VDG</td>
+<td align="left">VANAUKEN, RYAN C</td>
+<td align="left">RYAN</td>
+<td align="left">C</td>
+<td align="left">VANAUKEN</td>
+<td align="left"></td>
+<td align="left">210 EDWARD DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">20215232</td>
+</tr>
+<tr class="odd">
+<td align="left">KK4BWL</td>
+<td align="left">Goff, Daniel B</td>
+<td align="left">Daniel</td>
+<td align="left">B</td>
+<td align="left">Goff</td>
+<td align="left"></td>
+<td align="left">128 E Logan St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">20818910</td>
+</tr>
+<tr class="even">
+<td align="left">W3SAY</td>
+<td align="left">Files, W David</td>
+<td align="left">W David</td>
+<td align="left"></td>
+<td align="left">Files</td>
+<td align="left"></td>
+<td align="left">519 W Lamb St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">5119789</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3WPG</td>
+<td align="left">ALLEN, DOMONIQUE A</td>
+<td align="left">DOMONIQUE</td>
+<td align="left">A</td>
+<td align="left">ALLEN</td>
+<td align="left"></td>
+<td align="left">1329 AXEMANN RD APT 2</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">21217849</td>
+</tr>
+<tr class="even">
+<td align="left">KC3APM</td>
+<td align="left">Gregg, Jonathon C</td>
+<td align="left">Jonathon</td>
+<td align="left">C</td>
+<td align="left">Gregg</td>
+<td align="left"></td>
+<td align="left">453 S Main St</td>
+<td align="left">Pleasant Gap</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">22695464</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3BHM</td>
+<td align="left">Speer, Cameron D</td>
+<td align="left">Cameron</td>
+<td align="left">D</td>
+<td align="left">Speer</td>
+<td align="left"></td>
+<td align="left">1177 Blue Spruce</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">22992770</td>
+</tr>
+<tr class="even">
+<td align="left">K3JEG</td>
+<td align="left">GUIZAR, JON</td>
+<td align="left">JON</td>
+<td align="left"></td>
+<td align="left">GUIZAR</td>
+<td align="left"></td>
+<td align="left">1318 JOANNA DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">22227367</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3CLH</td>
+<td align="left">RUGH, KAITLYN M</td>
+<td align="left">KAITLYN</td>
+<td align="left">M</td>
+<td align="left">RUGH</td>
+<td align="left"></td>
+<td align="left">168 MARIE LANE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">23507064</td>
+</tr>
+<tr class="even">
+<td align="left">KC3DMR</td>
+<td align="left">LEE, MARK A</td>
+<td align="left">MARK</td>
+<td align="left">A</td>
+<td align="left">LEE</td>
+<td align="left"></td>
+<td align="left">110 H2O LANE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">23899354</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3DRP</td>
+<td align="left">TANNEY, DANIEL J</td>
+<td align="left">DANIEL</td>
+<td align="left">J</td>
+<td align="left">TANNEY</td>
+<td align="left"></td>
+<td align="left">2259 VALLEY VIEW RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">24043879</td>
+</tr>
+<tr class="even">
+<td align="left">KC3FQR</td>
+<td align="left">PRZYBYS, VANCE T</td>
+<td align="left">VANCE</td>
+<td align="left">T</td>
+<td align="left">PRZYBYS</td>
+<td align="left"></td>
+<td align="left">148 JEFFERSON CIRCLE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">24947590</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3POP</td>
+<td align="left">Deck 404, Christopher J</td>
+<td align="left">Christopher</td>
+<td align="left">J</td>
+<td align="left">Deck</td>
+<td align="left">404</td>
+<td align="left">1030 Airport Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">25074378</td>
+</tr>
+<tr class="even">
+<td align="left">K3HJI</td>
+<td align="left">BETZ, JANIS M</td>
+<td align="left">JANIS</td>
+<td align="left">M</td>
+<td align="left">BETZ</td>
+<td align="left"></td>
+<td align="left">135 ST PAUL ST</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">24941825</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HIS</td>
+<td align="left">ADHIKARI, BIRASPATI</td>
+<td align="left">BIRASPATI</td>
+<td align="left"></td>
+<td align="left">ADHIKARI</td>
+<td align="left"></td>
+<td align="left">165 S RIDGE STREET</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">25684069</td>
+</tr>
+<tr class="even">
+<td align="left">KC3HIU</td>
+<td align="left">HENDRICK, ANGUS G</td>
+<td align="left">ANGUS</td>
+<td align="left">G</td>
+<td align="left">HENDRICK</td>
+<td align="left"></td>
+<td align="left">132 W HIGH ST 1</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">25684077</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HMD</td>
+<td align="left">Persing, Gary L</td>
+<td align="left">Gary</td>
+<td align="left">L</td>
+<td align="left">Persing</td>
+<td align="left"></td>
+<td align="left">666 Maple Dr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">25586355</td>
+</tr>
+<tr class="even">
+<td align="left">N7PTC</td>
+<td align="left">CHAMP, PERRY T</td>
+<td align="left">PERRY</td>
+<td align="left">T</td>
+<td align="left">CHAMP</td>
+<td align="left"></td>
+<td align="left">151 WILTSHIRE DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">25308180</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HXB</td>
+<td align="left">Lebold, Mitchell S</td>
+<td align="left">Mitchell</td>
+<td align="left">S</td>
+<td align="left">Lebold</td>
+<td align="left"></td>
+<td align="left">420 N Allegheny St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">24006850</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KNO</td>
+<td align="left">Choma, Edward P</td>
+<td align="left">Edward</td>
+<td align="left">P</td>
+<td align="left">Choma</td>
+<td align="left"></td>
+<td align="left">236 E Bishop St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">27098334</td>
+</tr>
+<tr class="odd">
+<td align="left">KN3O</td>
+<td align="left">DUFFEY, EVAN J</td>
+<td align="left">EVAN</td>
+<td align="left">J</td>
+<td align="left">DUFFEY</td>
+<td align="left"></td>
+<td align="left">521 E Logan St</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">19252022</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KWP</td>
+<td align="left">Haagen, Katherine S</td>
+<td align="left">Katherine</td>
+<td align="left">S</td>
+<td align="left">Haagen</td>
+<td align="left"></td>
+<td align="left">554 Seibert Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">27281542</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LQE</td>
+<td align="left">Camp Kilowatt Contest Club</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">521 E Logan St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">27624436</td>
+</tr>
+<tr class="even">
+<td align="left">NB3G</td>
+<td align="left">KITKO, STEPHEN D</td>
+<td align="left">STEPHEN</td>
+<td align="left">D</td>
+<td align="left">KITKO</td>
+<td align="left"></td>
+<td align="left">1059 Seibert Road</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+<td align="right">10826923</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3EFD</td>
+<td align="left">Stewart II, James G</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>hams_16823 &lt;- trimmed_823 %&gt;%
+  select(., V5, V8, V16, V17, V18, V19) %&gt;%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, state = V18, zip = V19) %&gt;%
+  arrange(by = callsign)
+hams_16823 %&gt;% 
+  knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">callsign</th>
+<th align="left">name</th>
+<th align="left">address</th>
+<th align="left">city</th>
+<th align="left">state</th>
+<th align="right">zip</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">K3EDD</td>
+<td align="left">HINKLE, EDWARD J</td>
+<td align="left">108 CHAPEL HILL CIRCLE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">K3HJI</td>
+<td align="left">BETZ, JANIS M</td>
+<td align="left">135 ST PAUL ST</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">K3JEG</td>
+<td align="left">GUIZAR, JON</td>
+<td align="left">1318 JOANNA DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">K3RRA</td>
+<td align="left">Leslie, Donald C</td>
+<td align="left">100 HAWK NEST WAY</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">K3SBA</td>
+<td align="left">ALLISON, SHANNON B</td>
+<td align="left">106 FIELDSTONE LANE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">K3UZ</td>
+<td align="left">KUZIO, WILLIAM D</td>
+<td align="left">1013 W SPRINGFIELD DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">K3YGD</td>
+<td align="left">ROBISON, PHYLLIS J</td>
+<td align="left">257 THOMAS HILL RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168234224</td>
+</tr>
+<tr class="even">
+<td align="left">KA3MLK</td>
+<td align="left">BARNHART, JON P</td>
+<td align="left">1794 NITTANY VALLEY DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KA3NHF</td>
+<td align="left">Burns, Matthew J</td>
+<td align="left">1070 Zion Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KA3OIC</td>
+<td align="left">SALAMON, GARY J</td>
+<td align="left">116 Paradise Road</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KB1BH</td>
+<td align="left">JOHNSON Mr, KENNETH H</td>
+<td align="left">1322 Joanna Dr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KB3EFD</td>
+<td align="left">Stewart II, James G</td>
+<td align="left">129 N. Monroe St. Apt C</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3EFD</td>
+<td align="left">Stewart II, James G</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">KB3GUP</td>
+<td align="left">Karl, James H</td>
+<td align="left">2924 Buffalo Run Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3LGV</td>
+<td align="left">Bierly, Jerry L</td>
+<td align="left">2144 Buffalo Run Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KB3NZP</td>
+<td align="left">CONKLIN, DAVID</td>
+<td align="left">119 MIDDLE STREET</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3SHV</td>
+<td align="left">STRALEY, LEROY E</td>
+<td align="left">157 ROSEHIIL DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KB3VDG</td>
+<td align="left">VANAUKEN, RYAN C</td>
+<td align="left">210 EDWARD DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3WPG</td>
+<td align="left">ALLEN, DOMONIQUE A</td>
+<td align="left">1329 AXEMANN RD APT 2</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC0QJX</td>
+<td align="left">Vanauken, Gordon C</td>
+<td align="left">210 Edward Drive</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3APM</td>
+<td align="left">Gregg, Jonathon C</td>
+<td align="left">453 S Main St</td>
+<td align="left">Pleasant Gap</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3BHM</td>
+<td align="left">Speer, Cameron D</td>
+<td align="left">1177 Blue Spruce</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3CLH</td>
+<td align="left">RUGH, KAITLYN M</td>
+<td align="left">168 MARIE LANE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3DMR</td>
+<td align="left">LEE, MARK A</td>
+<td align="left">110 H2O LANE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3DRP</td>
+<td align="left">TANNEY, DANIEL J</td>
+<td align="left">2259 VALLEY VIEW RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3FQR</td>
+<td align="left">PRZYBYS, VANCE T</td>
+<td align="left">148 JEFFERSON CIRCLE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HIS</td>
+<td align="left">ADHIKARI, BIRASPATI</td>
+<td align="left">165 S RIDGE STREET</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3HIU</td>
+<td align="left">HENDRICK, ANGUS G</td>
+<td align="left">132 W HIGH ST 1</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HMD</td>
+<td align="left">Persing, Gary L</td>
+<td align="left">666 Maple Dr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3HXB</td>
+<td align="left">Lebold, Mitchell S</td>
+<td align="left">420 N Allegheny St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KNO</td>
+<td align="left">Choma, Edward P</td>
+<td align="left">236 E Bishop St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KWP</td>
+<td align="left">Haagen, Katherine S</td>
+<td align="left">554 Seibert Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LQE</td>
+<td align="left">Camp Kilowatt Contest Club</td>
+<td align="left">521 E Logan St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KC3POP</td>
+<td align="left">Deck 404, Christopher J</td>
+<td align="left">1030 Airport Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KC9LWZ</td>
+<td align="left">Arthur, Dan K</td>
+<td align="left">143 Jonathan Ln</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KD3AA</td>
+<td align="left">SETTLES, GARY S</td>
+<td align="left">2053 VALLEY VIEW RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KD3MY</td>
+<td align="left">HAUBE, FRANCES R</td>
+<td align="left">830 BLANCHARD ST</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KI4ADY</td>
+<td align="left">Watson, Barbara M</td>
+<td align="left">1307 Laura Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KI4ADZ</td>
+<td align="left">Watson, Stephen P</td>
+<td align="left">1307 Laura Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KK4BWL</td>
+<td align="left">Goff, Daniel B</td>
+<td align="left">128 E Logan St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">KN3O</td>
+<td align="left">DUFFEY, EVAN J</td>
+<td align="left">521 E Logan St</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">KR3C</td>
+<td align="left">CABRAL, RICHARD J</td>
+<td align="left">1340 AXEMANN RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168238108</td>
+</tr>
+<tr class="odd">
+<td align="left">N2YBV</td>
+<td align="left">LAREMORE, DOUGLAS A</td>
+<td align="left">141 Chicory Ave</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3BXP</td>
+<td align="left">WILSON JR, DONALD L</td>
+<td align="left">114 KATHRYN DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N3CCD</td>
+<td align="left">BLAIR, HERBERT W</td>
+<td align="left">155 WILLOW DRIVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3CDX</td>
+<td align="left">CATALANO JR, ALBERT S</td>
+<td align="left">137 Beaver Farm Ln.</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N3EB</td>
+<td align="left">BROOKS, ERIC L</td>
+<td align="left">170 JODON AVE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3EMD</td>
+<td align="left">BROOKS, JANICE E</td>
+<td align="left">170 JODON AVE</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N3MVA</td>
+<td align="left">EDMONDS, MICHAEL L</td>
+<td align="left">329 MEADOW LN</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3OKC</td>
+<td align="left">ROKITA, JOSEPH J</td>
+<td align="left">306 Wiltshire Drive</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N3UDV</td>
+<td align="left">EICHFELD, CHAD M</td>
+<td align="left">261 JEFFERSON CIRCLE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3VKS</td>
+<td align="left">GROFF, RICHARD D</td>
+<td align="left">273 Meadow Lane</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N3VMV</td>
+<td align="left">Miller, KATHRYN P</td>
+<td align="left">501 St Paul CIr</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N3XNO</td>
+<td align="left">SEDGWICK, JOHANNA L</td>
+<td align="left">213 E Lamb S</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">N7PTC</td>
+<td align="left">CHAMP, PERRY T</td>
+<td align="left">151 WILTSHIRE DR</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">N9FXZ</td>
+<td align="left">DE VILBISS, DAVID W</td>
+<td align="left">103 FLINT CT</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">NB3G</td>
+<td align="left">KITKO, STEPHEN D</td>
+<td align="left">1059 Seibert Road</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">W3CCC</td>
+<td align="left">WIDMANN, THOMAS W</td>
+<td align="left">2092 BUFFALO RUN RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168238015</td>
+</tr>
+<tr class="odd">
+<td align="left">W3GKD</td>
+<td align="left">ROBISON, JOHN J</td>
+<td align="left">257 THOMAS HILL RD</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168234224</td>
+</tr>
+<tr class="even">
+<td align="left">W3MJO</td>
+<td align="left">MILLER, JOSHUA A</td>
+<td align="left">360 W Lamb St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">W3SAY</td>
+<td align="left">Files, W David</td>
+<td align="left">519 W Lamb St</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="even">
+<td align="left">W3TNE</td>
+<td align="left">Eby, Thomas N</td>
+<td align="left">232 Armagast Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">WA3KVQ</td>
+<td align="left">WILSON, RAYMOND C</td>
+<td align="left">906 GREEN AVE</td>
+<td align="left">BELLEFONTE</td>
+<td align="left">PA</td>
+<td align="right">168232804</td>
+</tr>
+<tr class="even">
+<td align="left">WB3AEI</td>
+<td align="left">Mulfinger, Charles E</td>
+<td align="left">131 Stover Rd</td>
+<td align="left">Bellefonte</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+<tr class="odd">
+<td align="left">WB3DND</td>
+<td align="left">Murphy III, William G</td>
+<td align="left">127 WEST ST</td>
+<td align="left">PLEASANT GAP</td>
+<td align="left">PA</td>
+<td align="right">16823</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="section-3" class="section level3">
+<h3>16802</h3>
+<pre class="r"><code>hams &lt;- read.delim(file = 'data/tab/16802-trim.txt', header = FALSE)
+hams %&gt;%
+  select(., V5, V8, V16, V17, V18, V19) %&gt;%
+  rename(., callsign = V5, name = V8, address = V16, city = V17, 
+         state = V18, zip = V19) %&gt;%
+  arrange(., by = callsign) %&gt;%
+  knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">callsign</th>
+<th align="left">name</th>
+<th align="left">address</th>
+<th align="left">city</th>
+<th align="left">state</th>
+<th align="right">zip</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">K3CR</td>
+<td align="left">PENN STATE AMATEUR RADIO CLUB</td>
+<td align="left">HUB ACTIVITIES DESK</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3UCM</td>
+<td align="left">ALDAMANHORI, ABDULAZIZ B</td>
+<td align="left">111 B BEAM HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3UCN</td>
+<td align="left">AKEEL, HASHIM N</td>
+<td align="left">009 PACKER</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3UCQ</td>
+<td align="left">ALKHASHRAM, MOTHEEB M</td>
+<td align="left">205B BEAM HALL NORTH HALLS</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3UFM</td>
+<td align="left">WATTS, EMMA C</td>
+<td align="left">214 TENER HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3VRU</td>
+<td align="left">YU, XIANG</td>
+<td align="left">411 PENNYPACKER HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3VRY</td>
+<td align="left">RUMBAUGH, TJ</td>
+<td align="left">107 LYONS HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3VXL</td>
+<td align="left">AMBROSE, JAMES P</td>
+<td align="left">912 BRUMBAUGH HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3VXM</td>
+<td align="left">DING, BOYUAN</td>
+<td align="left">504 SHUNK HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3YID</td>
+<td align="left">WU, FAN</td>
+<td align="left">0317 HARTRANFT HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3YIE</td>
+<td align="left">KOUL, ANANT</td>
+<td align="left">103 STUAT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3YIF</td>
+<td align="left">LI, XIANG</td>
+<td align="left">608 MIFFLIN HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3YIG</td>
+<td align="left">JIN, YU</td>
+<td align="left">513 PENNYPACKER HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3YIJ</td>
+<td align="left">CHEN, TIANYI</td>
+<td align="left">212 HARTRANFT HALL POLLOCK</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3YIK</td>
+<td align="left">XU, ZHICHEN</td>
+<td align="left">104 PARKER HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3YIM</td>
+<td align="left">LEE, YONGSUK</td>
+<td align="left">HAMILTON 127 WEST HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KB3YOZ</td>
+<td align="left">KIM, HYUNA JUN</td>
+<td align="left">0410 STEPHENS HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KB3ZJK</td>
+<td align="left">LIU, RUI</td>
+<td align="left">208A RUMKLE HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3AHB</td>
+<td align="left">ALTASSAN, METEB A</td>
+<td align="left">413A HOLMES HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3AHD</td>
+<td align="left">HO, HSIANG YU</td>
+<td align="left">304 SHULZE HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3AHE</td>
+<td align="left">MARJANOVIC, MATEJ</td>
+<td align="left">HARTRANFT HALL 117</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3AHF</td>
+<td align="left">MIKHAIL, DANIEL</td>
+<td align="left">311 HOYT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3AIA</td>
+<td align="left">MONTASSER, OMAR</td>
+<td align="left">110 HARTRANFT HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3CPI</td>
+<td align="left">MASHRU, RUSHABM</td>
+<td align="left">619 HIESTER HALL PENN STATE UNIV</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3DRJ</td>
+<td align="left">GAENZLE, REESE H</td>
+<td align="left">521 SHUNK HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3EMX</td>
+<td align="left">HE, JIAYU</td>
+<td align="left">0314 LEETE HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3EMY</td>
+<td align="left">HUAN, ZHE</td>
+<td align="left">110 SHUNK HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3ENB</td>
+<td align="left">KABRA, NAMAN V</td>
+<td align="left">120 HIBBS HALL SOUTH HALLS PENN ST</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3ENC</td>
+<td align="left">KAMRAH, ANSHUMAN V</td>
+<td align="left">411A BEAM HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3END</td>
+<td align="left">LE, ZIQI</td>
+<td align="left">314 MIFFLIN</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3ENH</td>
+<td align="left">TRONCOSO ALDAS, NELSON N</td>
+<td align="left">324 ATHERTON HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3ENI</td>
+<td align="left">WU, MENGXI</td>
+<td align="left">305 MIFFLIN HALL MIFFLIN RD</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3ENJ</td>
+<td align="left">XIA, RUI</td>
+<td align="left">406 A HOLMES HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3ENL</td>
+<td align="left">BAILEY, JACKSON C</td>
+<td align="left">110 RITNER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3EXG</td>
+<td align="left">SONG, YI</td>
+<td align="left">236 THOMPSON HALL PENN STATE UNIV</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3FQI</td>
+<td align="left">CAMPBELL, ROSEMARY M</td>
+<td align="left">405 RITNER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3FQM</td>
+<td align="left">GARCIA DE JESUS, RICHARDO A</td>
+<td align="left">HIBBS HALL 403 UNIVERSITY PARK</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3FQO</td>
+<td align="left">MU, XIAOFAN</td>
+<td align="left">409 MIFFLIN HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3FQS</td>
+<td align="left">RAWAL, SHASHANK</td>
+<td align="left">330 MC ELWAIN HALLS</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3FQV</td>
+<td align="left">SHEPLEY, THOMAS A</td>
+<td align="left">MC ELWAIN 257</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GLS</td>
+<td align="left">ZHANG, SHAO</td>
+<td align="left">409 WOLF HALL POLLOCK HALLS</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GLT</td>
+<td align="left">WU, YIQI</td>
+<td align="left">316 TENER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GLU</td>
+<td align="left">WEI, JUNGHSIEN</td>
+<td align="left">007 WOLF HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GLZ</td>
+<td align="left">LEE, DONG JOO</td>
+<td align="left">317 HARTRANFT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GMC</td>
+<td align="left">KIM, HYEONSEOK</td>
+<td align="left">433 BEAVER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GME</td>
+<td align="left">DHANANI, JAI</td>
+<td align="left">501 SHULZE HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GMF</td>
+<td align="left">CHEN, NAISONG</td>
+<td align="left">0720 RITNER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GML</td>
+<td align="left">BHOWMIK, SUSHAN</td>
+<td align="left">916 TENER HALL EAST HALLS PSU</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GNF</td>
+<td align="left">AL-KAF, MOHAMMED</td>
+<td align="left">605 BEAVER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GNH</td>
+<td align="left">AN, DONGIN</td>
+<td align="left">139 SIMMONS HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GNK</td>
+<td align="left">GHAZALI, FARIS F</td>
+<td align="left">286 HAMILTON HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GNO</td>
+<td align="left">JHAVERI, HRIDAY V</td>
+<td align="left">407 BEAVER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GNP</td>
+<td align="left">KARABAYIR, ANIL</td>
+<td align="left">210 MIFFLIN HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GNQ</td>
+<td align="left">LEE, JAEYOUNG</td>
+<td align="left">276 MC ELWAIN HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GNT</td>
+<td align="left">NAIR, SIDDHARTH</td>
+<td align="left">115 B LEETE HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GNU</td>
+<td align="left">PENG, CHUNYU</td>
+<td align="left">303 A RUNKLE HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3GNV</td>
+<td align="left">RAMANAN, SANJEEV</td>
+<td align="left">0407 WOLF HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3GNX</td>
+<td align="left">ARAVIND KUMAR, KRISHNA SHANKAR</td>
+<td align="left">115 B LE ETE HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3HYK</td>
+<td align="left">CASSIDY, MICHAEL J</td>
+<td align="left">1014 SPROUL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3HYN</td>
+<td align="left">ATASHPANJEH, SOHEIL</td>
+<td align="left">0005 MC KEE HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3IEJ</td>
+<td align="left">Chen, Bochong</td>
+<td align="left">404b Holmes Hall North Halls University Park</td>
+<td align="left">University Park</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3INW</td>
+<td align="left">ZHAO, ZEYU</td>
+<td align="left">401 WOLF HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3IOA</td>
+<td align="left">AJWAH, HUSSAIN A</td>
+<td align="left">309 RUNKLE</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3IOC</td>
+<td align="left">HA, JONG WOO</td>
+<td align="left">509 SHULZE HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3IOD</td>
+<td align="left">HMOUD, ZAID</td>
+<td align="left">607 PORTER</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3IOE</td>
+<td align="left">HUANG, YA LIN</td>
+<td align="left">305 WOLF HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3IOF</td>
+<td align="left">NARIMAN, RAYHAN K</td>
+<td align="left">0111 SHUNK HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3IOJ</td>
+<td align="left">WANG, JIAWEI</td>
+<td align="left">022 SIMMONS HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3IOM</td>
+<td align="left">YANG, JINKAI</td>
+<td align="left">406 B RUNKLE HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWM</td>
+<td align="left">XIONG, YIXIN</td>
+<td align="left">0409 MILLEN HALL POLLOCK</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWT</td>
+<td align="left">OAUNRANTI, IKEOLUWA O</td>
+<td align="left">609 RITNER HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3JWU</td>
+<td align="left">LAW, KAI YUEN</td>
+<td align="left">2048 HOLMES HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3JWZ</td>
+<td align="left">HAMPIHALLIKAR, AMEYA</td>
+<td align="left">209 BRUMBAUGH HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KHU</td>
+<td align="left">WELCH, COLIN J</td>
+<td align="left">0201 PORTER</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KHX</td>
+<td align="left">BANDARI, SAHITH</td>
+<td align="left">208 STONE EAST HALL PENN ST 16802</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KTC</td>
+<td align="left">TIWARI, RISHABH</td>
+<td align="left">429 STONE EAST WALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KTD</td>
+<td align="left">NORAIN, OSAMA A</td>
+<td align="left">417 MITTLIN HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KTF</td>
+<td align="left">SEO, DONGSU</td>
+<td align="left">319 HARTRANFT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KTG</td>
+<td align="left">PARK, YOON SUNG</td>
+<td align="left">302 HARTRANFT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KTN</td>
+<td align="left">KAKULTE, PRARTHANA P</td>
+<td align="left">323 MCKEE HALL WEST HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3KTP</td>
+<td align="left">LI, MUCHEN</td>
+<td align="left">277 MCELVAIN HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3KTQ</td>
+<td align="left">SONG, YOORA</td>
+<td align="left">312A HOLMES HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3LBC</td>
+<td align="left">LEE, WON SEOK</td>
+<td align="left">261 THOMPSON HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3LBD</td>
+<td align="left">TRAN, HUY D</td>
+<td align="left">714 WOLF HALL</td>
+<td align="left">UNIVERSITY</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MBZ</td>
+<td align="left">ADAMS, TYLER C</td>
+<td align="left">606 PORTER HALL</td>
+<td align="left">UNIVERSITY</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MCB</td>
+<td align="left">BARRETTO, SHAWN R</td>
+<td align="left">273 HAMILTON HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MCK</td>
+<td align="left">FAN, ZHIPENG</td>
+<td align="left">114 HARTRANFT HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MCM</td>
+<td align="left">GROSS, ANDREW S</td>
+<td align="left">0908 SPROUL HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3MCN</td>
+<td align="left">LEHMAN, ALEXANDER D</td>
+<td align="left">0106 PACKER HALL</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3MGJ</td>
+<td align="left">LEASOFF, BRENDEN P</td>
+<td align="left">517 GEARY</td>
+<td align="left">STATE COLLEGE</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="odd">
+<td align="left">KC3NFJ</td>
+<td align="left">DASARI, SREE ADINARAYANA</td>
+<td align="left">008A HAMILTON HALL</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+<tr class="even">
+<td align="left">KC3NFQ</td>
+<td align="left">ZARRILLO, GIOVANNI A</td>
+<td align="left">536 ROBINSON</td>
+<td align="left">UNIVERSITY PARK</td>
+<td align="left">PA</td>
+<td align="right">16802</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="next-steps" class="section level1">
 <h1>Next steps</h1>
 <ol style="list-style-type: decimal">
 <li>Normalize the address, city, and zip fields.</li>
-<li>Automate queries to the FCC database.</li>
+<li>Automate queries to the FCC database if possible.</li>
 <li>Expand the range of licensees.</li>
 <li>Focus on new licensees (last year?)</li>
 </ol>
